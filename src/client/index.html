@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Github Explorer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="/static/js/lib/react/react.js"></script>
+        <script src="/static/js/lib/react/JSXTransformer.js"></script>
+        <script type="text/jsx" src="/static/js/views/repos.js"></script>
+        <script type="text/jsx" src="/static/js/views/commits.js"></script>
+        <script async type="text/jsx" src="/static/js/main.js"></script>
+
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="/static/css/normalize.css">
+        <link rel="stylesheet" href="/static/css/skeleton.css">
+        <link rel="icon" type="image/png" href="/static/images/favicon.png">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row" style="margin-top: 15%">
+                <h1>Github Explorer</h1>
+                <form>
+                    <div class="six columns">
+                        <label for="exampleEmailInput">Github Organization Name</label>
+                        <input class="u-full-width" autocomplete="off" type="text" placeholder="enter a github organization name" id="org-name">
+                    </div>
+                </form>
+            </div>
+            <div style="margin-top: 2rem" id="repositories"></div>
+            <div style="margin-top: 2rem" id="commits"></div>
+        </div>
+    </body>
+</html>
