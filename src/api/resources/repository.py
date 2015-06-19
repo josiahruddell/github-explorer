@@ -12,9 +12,7 @@ repo_fields = {
     'description': fields.String,
     'html_url': fields.String,
     'language': fields.String,
-    'watchers_count': fields.Integer,
-    'forks_count': fields.Integer,
-    'open_issues_count': fields.Integer
+    'pushed_at': fields.String
 }
 
 class RepoResourceList(RequestResource):
@@ -23,5 +21,10 @@ class RepoResourceList(RequestResource):
     # marshal to reduce client overhead
     @marshal_with(repo_fields)
     def get(self, org):
-        res = self.request(route_keys={'org': org })
-        return res.json()
+
+        data = self.request(route_keys={'org': org }).json()
+
+        if data and 'pushed_at' in data:
+            data = sorted(data, key=lambda x: x['pushed_at'], reverse=True)
+
+        return data

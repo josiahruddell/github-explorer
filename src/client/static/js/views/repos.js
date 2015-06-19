@@ -34,6 +34,7 @@
                             <strong>{this.props.full_name}</strong>
                         </a>
                         <em> ({this.props.language})</em>
+                        &nbsp;updated <abbr className="timeago" title={this.props.pushed_at}></abbr>
                         <p>{this.props.description}&nbsp;</p>
                     </div>
                     <div className="four columns">

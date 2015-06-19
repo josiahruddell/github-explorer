@@ -38,7 +38,8 @@
                         <a href={this.props.html_url} target="_blank" title="View on Github">
                             <strong>{this.props.sha}</strong>
                         </a>
-                        <em> ({this.props.author.name})</em>
+                        &nbsp;by <strong>{this.props.author.name} </strong>
+                        <abbr className="timeago" title={this.props.author.date}></abbr>
                         <p>{this.props.message}&nbsp;</p>
                     </div>
                 </div>

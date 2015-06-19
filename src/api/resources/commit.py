@@ -1,21 +1,20 @@
 from . import RequestResource
 from flask.ext.restful import fields, marshal_with
 
-class SubField(fields.Raw):
+class NestedField(fields.Raw):
     sub_field_name = None
 
     def __init__(self, sub_field_name, **kwargs):
         self.sub_field_name = sub_field_name
-        super(SubField, self).__init__(**kwargs)
+        super(NestedField, self).__init__(**kwargs)
 
     def format(self, value):
         k = self.sub_field_name
         return value[k] if k in value else None
 
-
 commit_fields = {
-    'author': SubField('author', attribute='commit'),
-    'message': SubField('message', attribute='commit'),
+    'author': NestedField('author', attribute='commit'),
+    'message': NestedField('message', attribute='commit'),
     'html_url': fields.String,
     'sha': fields.String
 }
@@ -25,5 +24,7 @@ class CommitResourceList(RequestResource):
 
     @marshal_with(commit_fields)
     def get(self, owner, repo):
-        res = self.request(route_keys={'owner': owner, 'repo': repo})
-        return res.json()
+
+        data = self.request(route_keys={'owner': owner, 'repo': repo}).json()
+
+        return data

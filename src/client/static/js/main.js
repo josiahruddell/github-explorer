@@ -1,4 +1,4 @@
-(function($, React){
+(function(global, $, React){
     'use strict';
     // application state
     var store = {
@@ -8,7 +8,7 @@
         orgSearch: null
     };
 
-    var activatePageListeners = function(){
+    var activateEventListeners = function(){
         // don't let the form submit
         $('form').on('submit', false);
 
@@ -23,7 +23,7 @@
 
         // attach event on document so activation is not required after
         // view update
-        $(document).on('click', 'button.view-commits', function(e){
+        $(document).on('click', 'button.view-commits', function(){
             var d = $(this).data();
             store.repo = d.repo;
             store.owner = d.owner;
@@ -32,11 +32,12 @@
 
         $(document).on('click', 'a.back-to-repos', function(e){
            helpers.toggleView();
+           e.preventDefault();
         });
     };
 
     var helpers = {
-        toggleView: function(load){
+        toggleView: function(){
             // there are only two views in this application
             if (store.view === 'repos'){
                 store.view = 'commits';
@@ -51,14 +52,15 @@
         },
         _render: function(target, view, data){
             React.render(React.createElement(view, data), target);
+            $('abbr.timeago').timeago();
         },
         renderReposView: function(data){
-            helpers._render($('#repositories').get(0), views.RepoList, data);
+            helpers._render($('#repositories').get(0), global.views.RepoList, data);
             if(store.view !== 'repos')
                 helpers.toggleView();
         },
         renderCommitsView: function(data){
-            helpers._render($('#commits').get(0), views.CommitList, data);
+            helpers._render($('#commits').get(0), global.views.CommitList, data);
             if(store.view !== 'commits')
                 helpers.toggleView();
         }
@@ -100,13 +102,12 @@
                 console.error(res);
                 helpers.renderCommitsView({valid: false});
             });
-
         }
     };
 
     // page ready entry point
     $(function(){
-        activatePageListeners();
+        activateEventListeners();
     });
 
-})(this.jQuery, this.React);
+})(this, this.jQuery, this.React);
